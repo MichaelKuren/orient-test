@@ -88,28 +88,35 @@ const CoursesTable: React.FC = () => {
           })),
         }));
 
-      const columns: ColumnsType<PointDTO> = [
+      const tableData = courses.map((course) => ({
+        key: course.courseTitle,
+        ...Object.fromEntries(
+          points.map((point) => [
+            point.key,
+            course.pointList.some((p) => p.key === point.key) ? point.key : "",
+          ]),
+        ),
+      }));
+
+      const columns: ColumnsType<any> = [
         {
           dataIndex: "key",
           key: "key",
-          render: (text: string) => text,
+          fixed: "left",
+          render: (text: string) => (
+            <span style={{ color: "red" }}>{text}</span>
+          ),
         },
-        ...courses.map((course) => ({
-          title: course.courseTitle,
-          key: course.courseTitle,
-          render: (point: PointDTO) => {
-            const coursePoint = course.pointList.find(
-              (p) => p.key === point.key,
-            );
-            return coursePoint ? "+" : "";
-          },
+        ...points.map((point) => ({
+          title: point.key,
+          key: point.key,
+          render: (record: any) => record[point.key] || "",
           align: "center" as "center",
         })),
       ];
 
       setColumns(columns);
-      setData(points);
-      console.log(courses);
+      setData(tableData);
     };
 
     reader.readAsText(file);
@@ -140,8 +147,11 @@ const CoursesTable: React.FC = () => {
           columns={columns}
           bordered={true}
           dataSource={data}
-          rowKey="key"
+          rowKey={"key"}
+          pagination={false}
           locale={{ emptyText: "Нет данных" }}
+          showHeader={false}
+          scroll={{ x: true }}
         />
       </div>
     </div>
