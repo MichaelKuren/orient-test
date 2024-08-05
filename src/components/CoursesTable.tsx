@@ -45,6 +45,8 @@ const CoursesTable: React.FC = () => {
           key: String(point.Id),
           mapX: parseFloat(point.MapPosition.x),
           mapY: parseFloat(point.MapPosition.y),
+          gpsX: parseFloat(point.Position.lng),
+          gpsY: parseFloat(point.Position.lat),
         }),
       );
 
@@ -57,6 +59,10 @@ const CoursesTable: React.FC = () => {
               ?.mapX,
             mapY: points.find((_point) => _point.key === String(point.Control))
               ?.mapY,
+            gpsX: points.find((_point) => _point.key === String(point.Control))
+              ?.gpsX,
+            gpsY: points.find((_point) => _point.key === String(point.Control))
+              ?.gpsY,
           })),
         }));
 
@@ -81,6 +87,7 @@ const CoursesTable: React.FC = () => {
 
       setColumns(columns);
       setData(points);
+      console.log(courses);
     };
 
     reader.readAsText(file);
