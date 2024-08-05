@@ -40,29 +40,51 @@ const CoursesTable: React.FC = () => {
       const parser = new XMLParser(parserOptions);
       const rawJson = parser.parse(fileContent);
 
-      const points: PointDTO[] = rawJson.CourseData.RaceCourseData.Control.map(
-        (point: any) => ({
-          key: String(point.Id),
-          mapX: parseFloat(point.MapPosition.x),
-          mapY: parseFloat(point.MapPosition.y),
-          gpsX: parseFloat(point.Position.lng),
-          gpsY: parseFloat(point.Position.lat),
-        }),
-      );
+      const buildPointDTO = (point: any): PointDTO => {
+        const result: PointDTO = { key: String(point.Id) };
+
+        if (point.MapPosition) {
+          if (point.MapPosition.x !== undefined) {
+            result.mapX = parseFloat(point.MapPosition.x);
+          }
+          if (point.MapPosition.y !== undefined) {
+            result.mapY = parseFloat(point.MapPosition.y);
+          }
+        }
+
+        if (point.Position) {
+          if (point.Position.lng !== undefined) {
+            result.gpsX = parseFloat(point.Position.lng);
+          }
+          if (point.Position.lat !== undefined) {
+            result.gpsY = parseFloat(point.Position.lat);
+          }
+        }
+
+        return result;
+      };
+
+      const points: PointDTO[] =
+        rawJson.CourseData.RaceCourseData.Control.map(buildPointDTO);
+
+      const buildPointWithDetails = (pointId: string): Partial<PointDTO> => {
+        const point = points.find((p) => p.key === pointId);
+        if (!point) return {};
+
+        return {
+          ...(point.mapX !== undefined && { mapX: point.mapX }),
+          ...(point.mapY !== undefined && { mapY: point.mapY }),
+          ...(point.gpsX !== undefined && { gpsX: point.gpsX }),
+          ...(point.gpsY !== undefined && { gpsY: point.gpsY }),
+        };
+      };
 
       const courses: PointCourseDTO[] =
         rawJson.CourseData.RaceCourseData.Course.map((course: any) => ({
           courseTitle: String(course.Name),
           pointList: course.CourseControl.map((point: any) => ({
             key: String(point.Control),
-            mapX: points.find((_point) => _point.key === String(point.Control))
-              ?.mapX,
-            mapY: points.find((_point) => _point.key === String(point.Control))
-              ?.mapY,
-            gpsX: points.find((_point) => _point.key === String(point.Control))
-              ?.gpsX,
-            gpsY: points.find((_point) => _point.key === String(point.Control))
-              ?.gpsY,
+            ...buildPointWithDetails(String(point.Control)),
           })),
         }));
 
