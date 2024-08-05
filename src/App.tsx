@@ -1,12 +1,8 @@
-import ResultsTable from "./ResultsTable.tsx";
-import { Typography } from "antd";
-
-const { Title } = Typography;
+import CoursesTable from "./components/CoursesTable";
 
 const App: React.FC = () => (
   <div>
-    <Title level={2}>Протокол результатов</Title>
-    <ResultsTable />
+    <CoursesTable />
   </div>
 );
 

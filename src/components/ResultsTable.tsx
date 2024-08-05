@@ -5,11 +5,11 @@ import { UploadOutlined } from "@ant-design/icons";
 import Papa from "papaparse";
 
 interface DataType {
-  number: number;
+  index: number;
   name: string;
   team: string;
   qualification: string;
-  numberGR: string;
+  number: string;
   year: number;
   result: string;
   behind: string;
@@ -18,11 +18,11 @@ interface DataType {
 }
 
 const columns: TableProps<DataType>["columns"] = [
-  { title: "№п/п", dataIndex: "number", key: "number" },
+  { title: "№п/п", dataIndex: "index", key: "index" },
   { title: "Фамилия, имя", dataIndex: "name", key: "name" },
   { title: "Коллектив", dataIndex: "team", key: "team" },
   { title: "Квал", dataIndex: "qualification", key: "qualification" },
-  { title: "Номер ГР", dataIndex: "numberGR", key: "numberGR" },
+  { title: "Номер", dataIndex: "number", key: "number" },
   { title: "Год рождения", dataIndex: "year", key: "year" },
   { title: "Результат", dataIndex: "result", key: "result" },
   { title: "Отставание", dataIndex: "behind", key: "behind" },
@@ -64,7 +64,7 @@ const ResultsTable: React.FC = () => {
         <Table
           columns={columns}
           dataSource={data}
-          rowKey="number"
+          rowKey="index"
           pagination={false}
           locale={{ emptyText: "Нет данных" }}
         />

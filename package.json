@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "vite --host",
+    "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -13,6 +13,7 @@
     "@ant-design/icons": "^5.4.0",
     "@ant-design/pro-components": "^2.7.14",
     "antd": "^5.19.3",
+    "fast-xml-parser": "^4.4.1",
     "papaparse": "^5.4.1",
     "react": "^18.3.1",
     "react-csv-reader": "^4.0.0",

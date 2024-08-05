@@ -1,4 +1,4 @@
-number,name,team,qualification,numberGR,year,result,behind,place,
+index,name,team,qualification,number,year,result,behind,place,
 1,Кузнецов Владислав,VI Orientem,МС,47,2002,00:40:16,+00:00,1,
 2,Куренков Михаил,ДВФУ,КМС,634,2004,00:41:49,+01:33,2,
 3,Семёнов Максим,ДВФУ,КМС,635,2002,00:44:33,+04:17,3,
